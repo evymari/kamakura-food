@@ -1,21 +1,22 @@
 //DEBE contener las funcionalidades del carrito de compras.
 
-import { filters, products } from "../src/assets/data/data.js";
 
-// funcion para no añadir dos veces el mismo id
- function addToCart(product) {
-   const existingProduct = cart.find(item => item.id === product.id);
-    if (existingProduct) {
-        existingProduct.quantity += 1;
+import { filters, products } from '../assets/data/data.js';
+
+function addToCart(product) {
+    if (!cart.find(item => item.id === product.id)) {
+        cart.push( {...product, quantify: 1});
+        renderCart();
     } else {
-        cart.push({...product, quantity: 1 });
+        alert("Este producto ya está en el carrito.");
     }
-   updateCart();
+}
 
-
-//funcion para eliminar productos del carrito
 function removeFromCart(productId) {
-    cart = cart.filter(item =>item.id !==productId);
-    updateCart();
-};
- }
+    const productIndex = cart.findIndex(item => item.id === productId);
+    if (productIndex !== -1) {
+        cart.splice(productIndex, 1);
+        renderCart();
+    }
+}
+
