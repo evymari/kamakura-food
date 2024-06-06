@@ -55,10 +55,10 @@ document.addEventListener("DOMContentLoaded", function () {
            <h5>${product.price}</h5>
          </div>
          <div class="quantity-container" id="quantity">
-                            <button>+</button>
-                            <p class="quantity">1</p>
-                            <button>-</button>
-                        </div>
+           <button>+</button>
+           <p class="quantity">1</p>
+           <button>-</button>
+         </div>
       `;
       cartList.appendChild(row);
     });
