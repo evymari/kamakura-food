@@ -54,3 +54,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
+
+
+//Que sume y reste numero y no baje de 0
+const quantityContainer = document.getElementById('quantity');
+const addButton = quantityContainer.querySelector('button:first-of-type');
+const restButton = quantityContainer.querySelector('button:last-of-type');
+
+
+function addQuantity() {
+  let currentQuantity = parseInt(quantity.textContent);
+  currentQuantity ++;
+  quantity.textContent = currentQuantity;
+}
+
+
+function restQuantity(){
+  let currentQuantity = parseInt(quantity.textContent);
+  if(currentQuantity > 0) {
+    currentQuantity--;
+  }
+quantity.textContent = currentQuantity  
+}
+
+addButton.addEventListener('click', addQuantity)
+restButton.addEventListener('click', restQuantity)
+
+
+
