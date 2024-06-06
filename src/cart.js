@@ -11,6 +11,16 @@ function addToCart(product) {
         alert("Este producto ya está en el carrito.");
     }
 }
+// sin mostrar alerta, me añadiría uno más al carrito
+// function addToCart(product) {
+//     const existingProduct = cart.find(item => item.id === product.id);
+//     if (existingProduct) {
+//         existingProduct.quantity += 1;
+//     } else {
+//         cart.push({ ...product, quantity: 1 });
+//     }
+//     renderCart();
+// }
 
 function removeFromCart(productId) {
     const productIndex = cart.findIndex(item => item.id === productId);
