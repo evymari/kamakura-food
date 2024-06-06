@@ -80,5 +80,7 @@ quantity.textContent = currentQuantity
 addButton.addEventListener('click', addQuantity)
 restButton.addEventListener('click', restQuantity)
 
-
+//Sumar subtotal actualizado
+const quantity = quantityContainer.querySelector('.quantity');
+const quantityTotal = document.getElementById('cart-total')
 
