@@ -62,11 +62,22 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
       cartList.appendChild(row);
     });
+
+    //Llamada y escucha del evento.
+    document.querySelectorAll(".close-button").forEach(button => {
+      button.addEventListener("click", removeProduct); 
+    });
   }
 
   function clearCart() {
     while (cartList.firstChild) {
       cartList.removeChild(cartList.firstChild);
     }
+  }
+
+  function removeProduct(e) {
+    const index = e.target.closest(".close-button").getAttribute("data-index");
+    cartItems.splice(index, 1); // Eliminar el producto del cartItems
+    cartFunction(); // Actualiza el carrito para que se vea sin el que acabamos de eliminar.
   }
 });
