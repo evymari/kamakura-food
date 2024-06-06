@@ -1,9 +1,5 @@
 //DEBE contener las funcionalidades del carrito de compras.
-
-
 import { filters, products } from '../assets/data/data.js';
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
   const cartList = document.getElementById("cart-products");
@@ -31,33 +27,34 @@ document.addEventListener("DOMContentLoaded", function () {
       price: product.querySelector("h5").textContent
     };
     
-      if(cartItems.length === 0){
-        console.log(cartItems);
-        cartItems.push(productInfo);
+    if (cartItems.length === 0){
+      cartItems.push(productInfo);
+    } else {
+      const cartProduct = cartItems.find(cartProduct => cartProduct.name === productInfo.name);
+      if(cartProduct){
+        alert("It's already in the cart!");
       } else {
-        const cartProduct = cartItems.find(cartProduct => cartProduct.name === productInfo.name);
-          if(cartProduct){
-            alert("It's already in the cart!");
-          } else {
-            cartItems.push(productInfo);
-          }
+        cartItems.push(productInfo);
+      }
     }
-}
+ }
 
   function cartFunction() {
     clearCart();
     cartItems.forEach((product) => {
       const row = document.createElement("div");
       row.classList.add("cart-container");
+      // Añado el botón y le paso como id el nombre ya que es el identificativo del plato. 
       row.innerHTML = `
+      <button class="close-button" id="${product.name}"><img src="./assets/img/close.svg" alt="close"></button> 
          <div class="text-container">
            <h3>${product.name}</h3>
            <h5>${product.price}</h5>
          </div>
          <div class="quantity-container" id="quantity">
-           <button>+</button>
-           <p class="quantity">1</p>
-           <button>-</button>
+          <button class="increase-quantity">+</button>
+          <p class="quantity">1</p>
+          <button>-</button>
          </div>
       `;
       cartList.appendChild(row);
@@ -76,8 +73,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function removeProduct(e) {
-    const index = e.target.closest(".close-button").getAttribute("data-index");
-    cartItems.splice(index, 1); // Eliminar el producto del cartItems
+    const product = e.target.closest(".close-button").getAttribute("id");
+    cartItems.splice(product, 1); // Eliminar el producto del cartItems (si le ponemos 2 quita de dos en dos)
     cartFunction(); // Actualiza el carrito para que se vea sin el que acabamos de eliminar.
   }
 });
