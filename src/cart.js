@@ -31,17 +31,17 @@ document.addEventListener("DOMContentLoaded", function () {
       price: product.querySelector("h5").textContent
     };
     
-   if(cartItems.length === 0){
-      console.log(cartItems);
-       cartItems.push(productInfo);
-     } else {
-      const productoEnCesta = cartItems.find(productoCesta => productoCesta.name === productInfo.name);
+      if(cartItems.length === 0){
+        console.log(cartItems);
+        cartItems.push(productInfo);
+      } else {
+        const productoEnCesta = cartItems.find(productoCesta => productoCesta.name === productInfo.name);
           if(productoEnCesta){
             alert("Ya está en la cesta!");
-          }else {
-           cartItems.push(productInfo);
-      }
-  }
+          } else {
+            cartItems.push(productInfo);
+          }
+    }
 }
 
   function cartFunction() {
