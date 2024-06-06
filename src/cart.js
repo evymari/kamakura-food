@@ -35,9 +35,9 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(cartItems);
         cartItems.push(productInfo);
       } else {
-        const productoEnCesta = cartItems.find(productoCesta => productoCesta.name === productInfo.name);
-          if(productoEnCesta){
-            alert("Ya está en la cesta!");
+        const cartProduct = cartItems.find(cartProduct => cartProduct.name === productInfo.name);
+          if(cartProduct){
+            alert("It's already in the cart!");
           } else {
             cartItems.push(productInfo);
           }
