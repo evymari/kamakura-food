@@ -1,5 +1,10 @@
 //DEBE contener las funcionalidades del carrito de compras.
 
+
+import { filters, products } from '../assets/data/data.js';
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
   const cartList = document.getElementById("cart-products");
   const productList = document.getElementById("products");
@@ -23,10 +28,21 @@ document.addEventListener("DOMContentLoaded", function () {
   function getCartData(product) {
     const productInfo = {
       name: product.querySelector("h3").textContent,
-      price: product.querySelector("h5").textContent,
+      price: product.querySelector("h5").textContent
     };
-    cartItems.push(productInfo);
-  }
+    
+      if(cartItems.length === 0){
+        console.log(cartItems);
+        cartItems.push(productInfo);
+      } else {
+        const cartProduct = cartItems.find(cartProduct => cartProduct.name === productInfo.name);
+          if(cartProduct){
+            alert("It's already in the cart!");
+          } else {
+            cartItems.push(productInfo);
+          }
+    }
+}
 
   function cartFunction() {
     clearCart();
