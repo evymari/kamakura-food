@@ -41,12 +41,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function cartFunction() {
     clearCart();
-    cartItems.forEach((product) => {
+    cartItems.forEach((product, index) => {
       const row = document.createElement("div");
       row.classList.add("cart-container");
       // Añado el botón y le paso como id el nombre ya que es el identificativo del plato. 
       row.innerHTML = `
-      <button class="close-button" id="${product.name}"><img src="./assets/img/close.svg" alt="close"></button> 
+      <button class="close-button" id="${index}"><img src="./assets/img/close.svg" alt="close"></button> 
          <div class="text-container">
            <h3>${product.name}</h3>
            <h5>${product.price}</h5>
