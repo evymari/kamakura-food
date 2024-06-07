@@ -27,9 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
       price: product.querySelector("h5").textContent
     };
     
-    if (cartItems.length === 0){
-      cartItems.push(productInfo);
-    } else {
       const cartProduct = cartItems.find(cartProduct => cartProduct.name === productInfo.name);
       if(cartProduct){
         alert("It's already in the cart!");
@@ -37,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
         cartItems.push(productInfo);
       }
     }
- }
 
   function cartFunction() {
     clearCart();
