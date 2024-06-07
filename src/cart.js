@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const cartList = document.getElementById("cart-products");
   const productList = document.getElementById("products");
   let cartItems = [];
+  let divisa = ' €'
 
   chargeaAddEventListener();
 
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getCartData(product) {
     const productName = product.querySelector("h3").textContent;
-    const productPrice = product.querySelector("h5").textContent;
+    const productPrice = parseFloat(product.querySelector("h5").textContent);
 
     const existingProduct = cartItems.find(item => item.name === productName);
     if (existingProduct) {
@@ -29,7 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const productInfo = {
         name: productName,
         price: productPrice,
-        quantity: 1
+        quantity: 1,
+        unitPrice: productPrice
       };
       cartItems.push(productInfo);
     }
@@ -38,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function cartFunction() {
     clearCart();
     cartItems.forEach((product) => {
+      product.price = product.unitPrice * product.quantity + divisa;
       const row = document.createElement("div");
       row.classList.add("cart-container");
       row.innerHTML = `
