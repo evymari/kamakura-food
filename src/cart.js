@@ -39,11 +39,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function cartFunction() {
     clearCart();
-    cartItems.forEach((product) => {
+    cartItems.forEach((product, index) => {
       product.price = product.unitPrice * product.quantity + divisa;
       const row = document.createElement("div");
       row.classList.add("cart-container");
       row.innerHTML = `
+      <button class="close-button" id="${index}"><img src="./assets/img/close.svg" alt="close"></button> 
          <div class="text-container">
            <h3>${product.name}</h3>
            <h5>${product.price}</h5>
@@ -56,6 +57,11 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
       cartList.appendChild(row);
     });
+
+    document.querySelectorAll(".close-button").forEach(button => {
+      button.addEventListener("click", removeProduct); 
+    });
+
     addQuantityEventListeners();
   }
 
@@ -94,5 +100,11 @@ document.addEventListener("DOMContentLoaded", function () {
     while (cartList.firstChild) {
       cartList.removeChild(cartList.firstChild);
     }
+  }
+
+  function removeProduct(e) {
+    const product = e.target.closest(".close-button").getAttribute("id");
+    cartItems.splice(product, 1); // Eliminar el producto del cartItems (si le ponemos 2 quita de dos en dos)
+    cartFunction(); // Actualiza el carrito para que se vea sin el que acabamos de eliminar.
   }
 });
