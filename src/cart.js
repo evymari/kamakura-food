@@ -23,11 +23,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const productName = product.querySelector("h3").textContent;
     const productPrice = product.querySelector("h5").textContent;
 
-    const cartProduct = cartItems.find(
-      (cartProduct) => cartProduct.name === productInfo.name
+    const cartProducts = cartItems.find(
+      (cartProduct) => cartProduct.name === productName
     );
-    if (cartProduct) {
-      existingProduct.quantity++;
+    if (cartProducts) {
+      cartProducts.quantity++;
     } else {
       const productInfo = {
         name: productName,
