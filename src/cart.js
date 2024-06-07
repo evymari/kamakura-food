@@ -1,10 +1,3 @@
-//DEBE contener las funcionalidades del carrito de compras.
-
-
-import { filters, products } from '../assets/data/data.js';
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
   const cartList = document.getElementById("cart-products");
   const productList = document.getElementById("products");
@@ -26,23 +19,21 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function getCartData(product) {
-    const productInfo = {
-      name: product.querySelector("h3").textContent,
-      price: product.querySelector("h5").textContent
-    };
-    
-      if(cartItems.length === 0){
-        console.log(cartItems);
-        cartItems.push(productInfo);
-      } else {
-        const cartProduct = cartItems.find(cartProduct => cartProduct.name === productInfo.name);
-          if(cartProduct){
-            alert("It's already in the cart!");
-          } else {
-            cartItems.push(productInfo);
-          }
+    const productName = product.querySelector("h3").textContent;
+    const productPrice = product.querySelector("h5").textContent;
+
+    const existingProduct = cartItems.find(item => item.name === productName);
+    if (existingProduct) {
+      existingProduct.quantity++;
+    } else {
+      const productInfo = {
+        name: productName,
+        price: productPrice,
+        quantity: 1
+      };
+      cartItems.push(productInfo);
     }
-}
+  }
 
   function cartFunction() {
     clearCart();
@@ -55,13 +46,45 @@ document.addEventListener("DOMContentLoaded", function () {
            <h5>${product.price}</h5>
          </div>
          <div class="quantity-container" id="quantity">
-                            <button>+</button>
-                            <p class="quantity">1</p>
-                            <button>-</button>
+                            <button class="increment">+</button>
+                            <p class="quantity">${product.quantity}</p>
+                            <button class="decrement">-</button>
                         </div>
       `;
       cartList.appendChild(row);
     });
+    addQuantityEventListeners();
+  }
+
+  function addQuantityEventListeners() {
+    document.querySelectorAll(".increment").forEach(button => {
+      button.addEventListener("click", incrementQuantity);
+    });
+    document.querySelectorAll(".decrement").forEach(button => {
+      button.addEventListener("click", decrementQuantity);
+    });
+  }
+
+  function incrementQuantity(e) {
+    const productName = e.target.closest(".cart-container").querySelector("h3").textContent;
+    const product = cartItems.find(item => item.name === productName);
+    if (product) {
+      product.quantity++;
+      cartFunction();
+    }
+  }
+
+  function decrementQuantity(e) {
+    const productName = e.target.closest(".cart-container").querySelector("h3").textContent;
+    const product = cartItems.find(item => item.name === productName);
+    if (product) {
+      if (product.quantity > 1) {
+        product.quantity--;
+      } else {
+        cartItems = cartItems.filter(item => item.name !== productName);
+      }
+      cartFunction();
+    }
   }
 
   function clearCart() {
@@ -70,33 +93,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
-
-
-//Que sume y reste numero y no baje de 0
-const quantityContainer = document.getElementById('quantity');
-const addButton = quantityContainer.querySelector('button:first-of-type');
-const restButton = quantityContainer.querySelector('button:last-of-type');
-
-
-function addQuantity() {
-  let currentQuantity = parseInt(quantity.textContent);
-  currentQuantity ++;
-  quantity.textContent = currentQuantity;
-}
-
-
-function restQuantity(){
-  let currentQuantity = parseInt(quantity.textContent);
-  if(currentQuantity > 0) {
-    currentQuantity--;
-  }
-quantity.textContent = currentQuantity  
-}
-
-addButton.addEventListener('click', addQuantity)
-restButton.addEventListener('click', restQuantity)
-
-//Sumar subtotal actualizado
-const quantity = quantityContainer.querySelector('.quantity');
-const quantityTotal = document.getElementById('cart-total')
-
