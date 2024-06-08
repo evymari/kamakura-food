@@ -65,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     addQuantityEventListeners();
+    totalOfSubtotals();
   }
 
   function addQuantityEventListeners() {
@@ -110,7 +111,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function removeProduct(e) {
     const product = e.target.closest(".close-button").getAttribute("id");
-    cartItems.splice( product, 1 );
+    cartItems.splice(product, 1);
     cartFunction();
+  }
+
+  function totalOfSubtotals() {
+    const total = cartItems.reduce(
+      (sum, product) => sum + product.unitPrice * product.quantity,
+      0
+    );
+    document.getElementById("cart-total").innerText =
+     ` Total: ${total.toFixed(2)} €`;
   }
 });
