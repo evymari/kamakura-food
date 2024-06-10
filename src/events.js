@@ -1,6 +1,5 @@
 //Intenta separar los eventos en este archivo.
 
-// abrir y cerrar un menú lateral
 
 document.getElementById("cart").addEventListener("click", function() {
    const cartContainer = document.getElementById("cart-container"); 
