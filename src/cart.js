@@ -1,4 +1,7 @@
 // Escucha el evento DOMContentLoaded y ejecuta la función cuando el DOM esté completamente cargado.
+
+import {contenedorRecibo} from './receipt.js';
+
 document.addEventListener("DOMContentLoaded", function () {
   // Obtiene el elemento con el ID "cart-products" y lo asigna a la variable cartList.
   const cartList = document.getElementById("cart-products");
@@ -169,4 +172,23 @@ document.addEventListener("DOMContentLoaded", function () {
       2
     )} €`;
   }
+  
+ // Calcula y muestra el total del carrito.
+  // reduce recorre cada producto en cartItems, calcula el subtotal de cada producto
+  //( product.unitPrice * product.quantity ) y acumula estos subtotales en sum, comenzando
+  // desde 0
+  function totalOfSubtotals() {
+    const total = cartItems.reduce(
+      (sum, product) => sum + product.unitPrice * product.quantity,0);
+    //.innerText =  Total: ${total.toFixed(2)} €: Actualiza el texto de este elemento
+    // con el total calculado.
+    //  total.toFixed( 2 ): Convierte el total a una cadena con exactamente dos decimales
+    document.getElementById("cart-total").innerText = ` Total: ${total.toFixed(2)} €`;
+  }
+document.getElementById("proceedPay-button").addEventListener("click",function(){
+  contenedorRecibo(cartItems);
 });
+
+
+});
+
