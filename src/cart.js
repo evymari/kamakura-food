@@ -1,10 +1,11 @@
-//DEBE contener las funcionalidades del carrito de compras.
-import { filters, products } from '../assets/data/data.js';
+
+import {contenedorRecibo} from './receipt.js';
 
 document.addEventListener("DOMContentLoaded", function () {
   const cartList = document.getElementById("cart-products");
   const productList = document.getElementById("products");
   let cartItems = [];
+  let  divisa = " €";
 
   chargeaAddEventListener();
 
@@ -24,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function getCartData ( product )
   {
     const productName = product.querySelector("h3").textContent;
-    const productPrice = product.querySelector("h5").textContent;
+    const productPrice = parseFloat(product.querySelector("h5").textContent);
 
     const cartProducts = cartItems.find(
       (cartProduct) => cartProduct.name === productName
@@ -43,7 +44,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function cartFunction() {
     clearCart();
+  
     cartItems.forEach((product, index) => {
+      product.price = product.unitPrice * product.quantity + divisa;
       const row = document.createElement("div");
       row.classList.add("cart-container");
       // Añado el botón y le paso como id el nombre ya que es el identificativo del plato. 
@@ -67,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
     addQuantityEventListeners();
+   totalOfSubtotals();
   }
 
   function addQuantityEventListeners() {
@@ -116,4 +120,23 @@ document.addEventListener("DOMContentLoaded", function () {
     cartItems.splice(product, 1); // Eliminar el producto del cartItems (si le ponemos 2 quita de dos en dos)
     cartFunction(); // Actualiza el carrito para que se vea sin el que acabamos de eliminar.
   }
+  
+ // Calcula y muestra el total del carrito.
+  // reduce recorre cada producto en cartItems, calcula el subtotal de cada producto
+  //( product.unitPrice * product.quantity ) y acumula estos subtotales en sum, comenzando
+  // desde 0
+  function totalOfSubtotals() {
+    const total = cartItems.reduce(
+      (sum, product) => sum + product.unitPrice * product.quantity,0);
+    //.innerText =  Total: ${total.toFixed(2)} €: Actualiza el texto de este elemento
+    // con el total calculado.
+    //  total.toFixed( 2 ): Convierte el total a una cadena con exactamente dos decimales
+    document.getElementById("cart-total").innerText = ` Total: ${total.toFixed(2)} €`;
+  }
+document.getElementById("proceedPay-button").addEventListener("click",function(){
+  contenedorRecibo(cartItems);
 });
+
+
+});
+
