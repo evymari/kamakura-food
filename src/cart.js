@@ -94,7 +94,25 @@ document.addEventListener("DOMContentLoaded", function () {
     // Calcula el total del carrito.
     totalOfSubtotals();
   }
+  const payButton = document.getElementById("pay-button");
+  const receiptContainer = document.getElementById("receipt-container");
+  payButton.addEventListener(
+    "click",
+    function () {
+      if (cartItems.length === 0) {
+        const emptyOrderMessage = document.createElement("p");
+        emptyOrderMessage.innerText = "Tu orden está vacía";
+        emptyOrderMessage.style.color = "red";
+        receiptContainer.appendChild(emptyOrderMessage);
+      } else {
+        // Si hay productos en el carrito, mostramos el pop-up de agradecimiento
+        showPopup();
+      }
+    },
+    { once: true }
+  );
 
+  function showPopup() {}
   // Añade event listeners a los botones de incrementar y decrementar cantidad.
   function addQuantityEventListeners() {
     document.querySelectorAll(".increment").forEach((button) => {
@@ -167,26 +185,14 @@ document.addEventListener("DOMContentLoaded", function () {
     //.innerText = ` Total: ${total.toFixed(2)} €`: Actualiza el texto de este elemento
     // con el total calculado.
     //  total.toFixed( 2 ): Convierte el total a una cadena con exactamente dos decimales
-    document.getElementById("cart-total").innerText = ` Total: ${total.toFixed(2)} €`;
+    document.getElementById("cart-total").innerText = ` Total: ${total.toFixed(
+      2
+    )} €`;
   }
-  
- // Calcula y muestra el total del carrito.
-  // reduce recorre cada producto en cartItems, calcula el subtotal de cada producto
-  //( product.unitPrice * product.quantity ) y acumula estos subtotales en sum, comenzando
-  // desde 0
-  function totalOfSubtotals() {
-    const total = cartItems.reduce(
-      (sum, product) => sum + product.unitPrice * product.quantity,0);
-    //.innerText =  Total: ${total.toFixed(2)} €: Actualiza el texto de este elemento
-    // con el total calculado.
-    //  total.toFixed( 2 ): Convierte el total a una cadena con exactamente dos decimales
-    document.getElementById("cart-total").innerText = ` Total: ${total.toFixed(2)} €`;
-  }
-
   // Llamamos a la función showReceipt pasando los items del carrito
-  document.getElementById("proceedPay-button").addEventListener("click", function () {
-    showReceipt(cartItems);
-  });
+  document
+    .getElementById("proceedPay-button")
+    .addEventListener("click", function () {
+      showReceipt(cartItems);
+    });
 });
-
-
