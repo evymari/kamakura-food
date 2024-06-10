@@ -1,7 +1,6 @@
+import { showReceipt } from "./receipt.js";
+
 // Escucha el evento DOMContentLoaded y ejecuta la función cuando el DOM esté completamente cargado.
-
-import {contenedorRecibo} from './receipt.js';
-
 document.addEventListener("DOMContentLoaded", function () {
   // Obtiene el elemento con el ID "cart-products" y lo asigna a la variable cartList.
   const cartList = document.getElementById("cart-products");
@@ -168,9 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //.innerText = ` Total: ${total.toFixed(2)} €`: Actualiza el texto de este elemento
     // con el total calculado.
     //  total.toFixed( 2 ): Convierte el total a una cadena con exactamente dos decimales
-    document.getElementById("cart-total").innerText = ` Total: ${total.toFixed(
-      2
-    )} €`;
+    document.getElementById("cart-total").innerText = ` Total: ${total.toFixed(2)} €`;
   }
   
  // Calcula y muestra el total del carrito.
@@ -185,10 +182,11 @@ document.addEventListener("DOMContentLoaded", function () {
     //  total.toFixed( 2 ): Convierte el total a una cadena con exactamente dos decimales
     document.getElementById("cart-total").innerText = ` Total: ${total.toFixed(2)} €`;
   }
-document.getElementById("proceedPay-button").addEventListener("click",function(){
-  contenedorRecibo(cartItems);
+
+  // Llamamos a la función showReceipt pasando los items del carrito
+  document.getElementById("proceedPay-button").addEventListener("click", function () {
+    showReceipt(cartItems);
+  });
 });
 
-
-});
 
